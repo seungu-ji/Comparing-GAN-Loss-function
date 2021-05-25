@@ -2,18 +2,26 @@
 
 In this repository, We evaluate the performance of the GAN's loss functions(ex. LSGAN or WGAN etc..) as an indicator of GAN performance such as **Inception Score(IS)** or **Frechet Inception Distance(FID)**.
 
+We plan to use several datasets for accurate evaluation.
+
 ## **Directors structure**
 
 ```
 Compare Gan Loss Function
 +---[images]
-|   +---....
+|   +---...
 |
-+---[trainingMethod]
++---[models]
 |   +---__init__.py
 |   |---original_gan.py
 |   |---lsgan.py
 |   |---wgan.py
+|   |---wgan_gp.py
+|
++---[utils]
+|   +---__init__.py
+|   |---fid.py
+|   |---utils.py
 |
 |---main.py
 ```
@@ -24,7 +32,7 @@ Why GAN has many losses?
 
 because of original GAN's problems
 
-### 1. Oiginal GAN
+### **1. Oiginal GAN**
 
 paper link: https://arxiv.org/abs/1406.2661
 
@@ -38,7 +46,7 @@ many gan models suffer the following major problems:
 - Unbalance between the generator and discriminator causing overfitting
 - Highly sensitive to the hyper-parameter selections
 
-### 2. LSGAN
+### **2. LSGAN**
 
 paper link: https://arxiv.org/abs/1611.04076
 
@@ -54,7 +62,7 @@ The LSGAN can be implemented with a minor change to the output layer of the disc
 least square gan loss function is:
 ![LSGAN LOSS](./images/lsgan_loss_function.PNG)
 
-### WGAN
+### **3. WGAN**
 
 paper link: https://arxiv.org/abs/1701.07875
 
@@ -67,14 +75,43 @@ Wasserstein Generative Adversarial Network, or WGAN for short, is a GAN variant 
 ![WGAN ALGORITHM](./images/wgan_algorithm.PNG)
 
 
-### WGAN-GP
-
-This is the models moving forward: 
-
-![GAN MODELS](./images/GAN_losses.PNG)
+### **4. WGAN-GP**
+will update
 
 
 ## **GAN Evaluating Metrics**
 
-- Inception Score (IS)
-- Frechet Inception Distance (FID)
+### **1. Inception Score (IS)**
+will update
+
+### **2. Frechet Inception Distance (FID)**
+
+paper link: https://arxiv.org/abs/1706.08500
+
+![FID](./images/frechet_distance.PNG)
+
+FID(Frechet Inception Distance) is a performance metric to evaluate the similarity between two dataset of images. It is shown to correlate well to human evaluation of image quality, and it is able to detect intra_class mode collapse.
+
+This implementation uses a different Inception v3 model from that what used in the original implementation. Not comfirmed, but we believe pytorch uses the Inception v3 model from 2016-08-28, while the original FID implementation uses a network from 2015-12-05. However, we are sure there will be no big difference. **But, it may be different from the results of the papers due to the difference in model weight.** So, if you want to report FID scores in your paper, you should consider using the official Tensorflow implementation.
+
+The code is avaliable: here
+
+The images must be **int8** between 0-255, or **float32** between 0-1 and all images are of same image shape. In this implementation, we reshape images to (299, 299) for fid input.
+
+### **Usage**
+
+To compute the FID score between two datasets, where images of each dataset are contained in an individual folder:
+```python
+
+```
+
+## TODO
+- [ ] add models
+This is the models moving forward: 
+
+![GAN MODELS](./images/GAN_losses.PNG)
+- [ ] get inception v3 weight for FID from the official Tensorflow FID implementaiton
+- [ ] add more datasets
+- [ ] add GAN Ensembling
+- [ ] add more evaluation metrics
+- [ ] cleaning code
