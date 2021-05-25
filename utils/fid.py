@@ -12,20 +12,6 @@ from torchvision.models import inception_v3
 
 from utils.utils import *
 
-def to_cuda(elements):
-    """
-    Transfers elements to cuda if GPU is available
-    Args:
-        elements: torch.tensor or torch.nn.module
-        --
-    Returns:
-        elements: same as input on GPU memory, if available
-    """
-    if torch.cuda.is_available():
-        return elements.cuda()
-
-    return elements
-
 class PartialInceptionNetwork(nn.Module):
     def __init__(self, transform_input=True):
         super().__init__()
