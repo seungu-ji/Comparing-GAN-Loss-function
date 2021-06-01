@@ -13,7 +13,7 @@ Compare Gan Loss Function
 |
 +---[models]
 |   +---__init__.py
-|   |---original_gan.py
+|   |---dcgan.py
 |   |---lsgan.py
 |   |---wgan.py
 |   |---wgan_gp.py
@@ -21,9 +21,8 @@ Compare Gan Loss Function
 +---[utils]
 |   +---__init__.py
 |   |---fid.py
+|   |---config.py
 |   |---utils.py
-|
-|---main.py
 ```
 
 ## **GAN Losses**
@@ -46,7 +45,15 @@ many gan models suffer the following major problems:
 - Unbalance between the generator and discriminator causing overfitting
 - Highly sensitive to the hyper-parameter selections
 
-### **2. LSGAN**
+### **2. DCGAN**
+
+paper link: https://arxiv.org/abs/1511.06434
+
+DCGAN is a network that introduces a convolution layer to GAN, and since DCGAN, most GANs use DCGAN's architecture. DCGAN only introduces a convolution layer to GAN, and it eliminates the instability of GAN and enables stable learning in most situations.
+
+![DCGAN](./images/dcgan.PNG)
+
+### **3. LSGAN**
 
 paper link: https://arxiv.org/abs/1611.04076
 
@@ -62,7 +69,7 @@ The LSGAN can be implemented with a minor change to the output layer of the disc
 least square gan loss function is:
 ![LSGAN LOSS](./images/lsgan_loss_function.PNG)
 
-### **3. WGAN**
+### **4. WGAN**
 
 paper link: https://arxiv.org/abs/1701.07875
 
@@ -75,7 +82,7 @@ Wasserstein Generative Adversarial Network, or WGAN for short, is a GAN variant 
 ![WGAN ALGORITHM](./images/wgan_algorithm.PNG)
 
 
-### **4. WGAN-GP**
+### **5. WGAN-GP**
 will update
 
 
@@ -103,8 +110,7 @@ The images must be **int8** between 0-255, or **float32** between 0-1 and all im
 To compute the FID score between two datasets, where images of each dataset are contained in an individual folder:
 
 ```python
-python fid.py --path1 path/to/real/data --path2 path/to/fake/data --batch-size 8
-
+python utils/fid.py --path1 path/to/real/data --path2 path/to/fake/data --batch-size 8
 ```
 
 ## TODO
