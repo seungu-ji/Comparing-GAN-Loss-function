@@ -101,7 +101,9 @@ The images must be **int8** between 0-255, or **float32** between 0-1 and all im
 ### **Usage**
 
 To compute the FID score between two datasets, where images of each dataset are contained in an individual folder:
+
 ```python
+python fid.py --path1 path/to/real/data --path2 path/to/fake/data --batch-size 8
 
 ```
 
